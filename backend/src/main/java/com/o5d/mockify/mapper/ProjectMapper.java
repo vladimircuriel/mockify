@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {EndpointMapper.class})
+@Mapper(uses = {EndpointMapper.class, UserMapper.class})
 public interface ProjectMapper {
 
     ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
@@ -19,5 +19,8 @@ public interface ProjectMapper {
     @Mapping(target = "status", ignore = true)
     Project dtoToProject(ProjectRequestDTO dto);
 
+    @Mapping(target = "owner", source = "owner")
+    @Mapping(target = "team", source = "team")
+    @Mapping(target = "endpoints", source = "endpoints")
     ProjectResponseDTO projectToResponseDto(Project project);
 }
