@@ -34,15 +34,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
         Map<String, String> vars =
                 pathMatcher.extractUriTemplateVariables(
-                        "/api/v1/endpoint/projects/{projectId}/api/**",
-                        request.getRequestURI());
+                        "/api/v1/endpoint/projects/{projectId}/api/**", request.getRequestURI());
 
         String projectId = vars.getOrDefault("projectId", null);
 
@@ -70,14 +67,12 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String jwt = header.substring(7);
-        boolean valid = jwtService.isJwtEndpointValid(
-                jwt,
-                projectId,
-                endpoint.getId().toString()
-        );
+        boolean valid = jwtService.isJwtEndpointValid(jwt, projectId, endpoint.getId().toString());
 
         if (!valid) {
-            send(response, HttpServletResponse.SC_UNAUTHORIZED,
+            send(
+                    response,
+                    HttpServletResponse.SC_UNAUTHORIZED,
                     "This token is not valid for this endpoint or has expired");
             return;
         }
