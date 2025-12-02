@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EntityRepository extends JpaRepository<Endpoint, Long> {
+public interface EndpointRepository extends JpaRepository<Endpoint, Long> {
     List<Endpoint> findByStatus(boolean status);
 
     Optional<Endpoint> findByIdAndStatus(Long id, boolean status);
