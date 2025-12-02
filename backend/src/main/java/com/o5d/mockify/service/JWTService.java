@@ -1,7 +1,7 @@
 /* (C)2025 */
 package com.o5d.mockify.service;
 
-import com.o5d.mockify.dto.AuthResponseDTO;
+import com.o5d.mockify.dto.response.AuthResponseDTO;
 import com.o5d.mockify.model.Endpoint;
 import com.o5d.mockify.model.User;
 import io.jsonwebtoken.Claims;

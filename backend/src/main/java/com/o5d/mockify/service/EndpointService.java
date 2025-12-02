@@ -4,12 +4,9 @@ package com.o5d.mockify.service;
 import com.o5d.mockify.model.Endpoint;
 import com.o5d.mockify.model.Header;
 import com.o5d.mockify.repository.EndpointRepository;
-
-import lombok.AllArgsConstructor;
-
 import java.util.List;
 import java.util.Optional;
-
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,42 +31,48 @@ public class EndpointService {
     }
 
     public Optional<Endpoint> updateEndpoint(Endpoint newEndpoint, Long id) {
-        return getEndpointById(id).map(existing -> {
+        return getEndpointById(id)
+                .map(
+                        existing -> {
+                            existing.setName(newEndpoint.getName());
+                            existing.setDescription(newEndpoint.getDescription());
+                            existing.setPath(newEndpoint.getPath());
+                            existing.setMethod(newEndpoint.getMethod());
+                            existing.setDelay(newEndpoint.getDelay());
+                            existing.setExpirationDate(newEndpoint.getExpirationDate());
+                            existing.setEncoding(newEndpoint.getEncoding());
+                            existing.setResponseType(newEndpoint.getResponseType());
+                            existing.setResponseStatus(newEndpoint.getResponseStatus());
+                            existing.setJwt(newEndpoint.getJwt());
+                            existing.setBody(newEndpoint.getBody());
+                            existing.setStatus(newEndpoint.isStatus());
+                            existing.setSecurity(newEndpoint.isSecurity());
+                            existing.getHeaders().clear();
 
-            existing.setName(newEndpoint.getName());
-            existing.setDescription(newEndpoint.getDescription());
-            existing.setPath(newEndpoint.getPath());
-            existing.setMethod(newEndpoint.getMethod());
-            existing.setDelay(newEndpoint.getDelay());
-            existing.setExpirationDate(newEndpoint.getExpirationDate());
-            existing.setEncoding(newEndpoint.getEncoding());
-            existing.setResponseType(newEndpoint.getResponseType());
-            existing.setResponseStatus(newEndpoint.getResponseStatus());
-            existing.setJwt(newEndpoint.getJwt());
-            existing.setBody(newEndpoint.getBody());
-            existing.setStatus(newEndpoint.isStatus());
-            existing.setSecurity(newEndpoint.isSecurity());
-            existing.getHeaders().clear();
+                            if (newEndpoint.getHeaders() != null) {
+                                newEndpoint
+                                        .getHeaders()
+                                        .forEach(
+                                                header -> {
+                                                    Header h = new Header();
+                                                    h.setKey(header.getKey());
+                                                    h.setValue(header.getValue());
+                                                    h.setEndpoint(existing);
+                                                    existing.getHeaders().add(h);
+                                                });
+                            }
 
-            if (newEndpoint.getHeaders() != null) {
-                newEndpoint.getHeaders().forEach(header -> {
-                    Header h = new Header();
-                    h.setKey(header.getKey());
-                    h.setValue(header.getValue());
-                    h.setEndpoint(existing);
-                    existing.getHeaders().add(h);
-                });
-            }
-
-            return endpointRepository.save(existing);
-        });
+                            return endpointRepository.save(existing);
+                        });
     }
 
-
     public void deleteEndpoint(Long id) {
-        endpointRepository.findById(id).ifPresent(endpoint -> {
-            endpoint.setStatus(false);
-            endpointRepository.save(endpoint);
-        });
+        endpointRepository
+                .findById(id)
+                .ifPresent(
+                        endpoint -> {
+                            endpoint.setStatus(false);
+                            endpointRepository.save(endpoint);
+                        });
     }
 }
