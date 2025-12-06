@@ -13,6 +13,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Optional<Project> findByIdAndStatusTrue(Long id);
 
+    Optional<Project> findByEndpointsIdAndStatusTrue(Long id);
+
     List<Project> findByOwnerUsername(String username);
 
     List<Project> findByOwnerIdAndStatusTrue(Long id);

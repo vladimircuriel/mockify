@@ -15,7 +15,7 @@ public class ProjectRequestDTO {
 
     @NotBlank(message = "Tag is mandatory") String tag;
 
-    boolean openAccess;
+    @NotNull(message = "Access scope is mandatory") boolean openAccess;
 
     @NotNull(message = "Owner ID is mandatory") Long ownerId;
 }

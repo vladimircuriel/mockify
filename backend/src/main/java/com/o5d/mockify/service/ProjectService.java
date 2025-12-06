@@ -35,6 +35,10 @@ public class ProjectService {
         return projectRepository.findByIdAndStatusTrue(id);
     }
 
+    public Optional<Project> findByEndpointId(Long id) {
+        return projectRepository.findByIdAndStatusTrue(id);
+    }
+
     public Project save(Project project) {
         project.setStatus(true);
         return projectRepository.save(project);
