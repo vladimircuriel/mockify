@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/v1/login/")
+@RequestMapping("/api/v1/login")
 public class LoginController {
 
     private final UserService userService;
@@ -29,7 +29,6 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginRequestDTO dto) {
-
         User user =
                 userService
                         .getUserByUsername(dto.getUsername())

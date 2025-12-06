@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/v1/logout/")
+@RequestMapping("/api/v1/logout")
 public class LogoutController {
 
     private final JWTService jwtService;
