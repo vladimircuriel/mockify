@@ -4,6 +4,7 @@ package com.o5d.mockify.config;
 import com.o5d.mockify.enums.ERole;
 import com.o5d.mockify.model.Role;
 import com.o5d.mockify.model.User;
+import com.o5d.mockify.repository.RoleRepository;
 import com.o5d.mockify.repository.UserRepository;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -17,12 +18,18 @@ import org.springframework.stereotype.Component;
 public class AdminInitializer implements ApplicationRunner {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) {
 
         if (userRepository.count() == 0) {
+
+            Role adminRole =
+                    roleRepository
+                            .findByName(ERole.ADMIN)
+                            .orElseGet(() -> roleRepository.save(new Role(ERole.ADMIN)));
 
             User admin =
                     User.builder()
@@ -32,7 +39,7 @@ public class AdminInitializer implements ApplicationRunner {
                             .lastName("Admin")
                             .email("admin@admin.com")
                             .active(true)
-                            .roles(Set.of(Role.builder().name(ERole.ADMIN).build()))
+                            .roles(Set.of(adminRole))
                             .build();
 
             userRepository.save(admin);
