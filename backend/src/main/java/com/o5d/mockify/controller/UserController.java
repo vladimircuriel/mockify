@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/users/")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
@@ -87,7 +87,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(
             @PathVariable Long id, @RequestHeader("Authorization") String token) {
 
@@ -122,13 +122,13 @@ public class UserController {
 
         User user = UserMapper.INSTANCE.dtoToUser(request);
 
-        User saved = userService.saveUser(user);
+        User saved = userService.saveUser(user, request.getRoles());
 
         return new ResponseEntity<>(
                 UserMapper.INSTANCE.userToResponseDto(saved), HttpStatus.CREATED);
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UserRequestDTO request,
@@ -155,15 +155,13 @@ public class UserController {
 
         User updated = UserMapper.INSTANCE.dtoToUser(request);
         updated.setId(id);
-        updated.setPassword(existing.getPassword());
-        updated.setEmail(existing.getEmail());
 
-        User saved = userService.saveUser(updated);
+        User saved = userService.saveUser(updated, request.getRoles());
 
         return ResponseEntity.ok(UserMapper.INSTANCE.userToResponseDto(saved));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<UserResponseDTO> deleteUser(
             @PathVariable Long id, @RequestHeader("Authorization") String token) {
 

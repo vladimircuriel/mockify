@@ -1,11 +1,9 @@
 /* (C)2025 */
 package com.o5d.mockify.dto.request;
 
-import com.o5d.mockify.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Set;
 import lombok.Value;
 
 @Value
@@ -23,5 +21,5 @@ public class UserRequestDTO {
 
     String password;
 
-    @NotNull(message = "Roles are mandatory") Set<Role> roles;
+    @NotNull(message = "Roles are mandatory") String[] roles;
 }
