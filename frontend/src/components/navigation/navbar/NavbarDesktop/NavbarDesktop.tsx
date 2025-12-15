@@ -1,5 +1,7 @@
 'use client'
 
+import BrandLogoIcon from '@components/icons/BrandLogoIcon'
+import NavbarDesktopItems from './NavbarDesktopItems'
 import {
   Avatar,
   Button,
@@ -12,8 +14,6 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@heroui/react'
-import BrandLogoIcon from '@components/icons/BrandLogoIcon'
-import NavbarDesktopItems from './NavbarDesktopItems'
 
 import { Icon } from '@iconify/react'
 import Routes from '@lib/data/routes.data'

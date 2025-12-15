@@ -1,9 +1,8 @@
 'use client'
 
-import type { NavbarProps } from '@heroui/react'
-
 import { NavbarMenuToggle, Navbar as NextUINavbar, cn } from '@heroui/react'
 import React from 'react'
+import type { NavbarProps } from '@heroui/react'
 
 import NavbarDesktop from './navbarDesktop/NavbarDesktop'
 import NavbarMobile from './navbarMobile/NavbarMobile'
