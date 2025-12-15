@@ -47,7 +47,7 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public User saveUser(User user, String[] roleNames) {
+    public User createUser(User user, String[] roleNames) {
         Set<Role> resolvedRoles =
                 Arrays.stream(roleNames)
                         .map(name -> ERole.valueOf(name.toUpperCase()))
@@ -64,6 +64,26 @@ public class UserService {
 
         user.setRoles(resolvedRoles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.save(user);
+    }
+
+    public User updateUser(User user, String[] roleNames) {
+        Set<Role> resolvedRoles =
+                Arrays.stream(roleNames)
+                        .map(name -> ERole.valueOf(name.toUpperCase()))
+                        .map(
+                                erole ->
+                                        roleRepository
+                                                .findByName(erole)
+                                                .orElseThrow(
+                                                        () ->
+                                                                new RuntimeException(
+                                                                        "Role not found: "
+                                                                                + erole)))
+                        .collect(Collectors.toSet());
+
+        user.setRoles(resolvedRoles);
 
         return userRepository.save(user);
     }

@@ -122,7 +122,7 @@ public class UserController {
 
         User user = UserMapper.INSTANCE.dtoToUser(request);
 
-        User saved = userService.saveUser(user, request.getRoles());
+        User saved = userService.createUser(user, request.getRoles());
 
         return new ResponseEntity<>(
                 UserMapper.INSTANCE.userToResponseDto(saved), HttpStatus.CREATED);
@@ -158,7 +158,7 @@ public class UserController {
         updated.setPassword(existing.getPassword());
 
 
-        User saved = userService.saveUser(updated, request.getRoles());
+        User saved = userService.updateUser(updated, request.getRoles());
 
         return ResponseEntity.ok(UserMapper.INSTANCE.userToResponseDto(saved));
     }
