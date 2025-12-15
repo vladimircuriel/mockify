@@ -34,7 +34,7 @@ export default async function RootLayout({
   const session: JWTPayload | Error = await decrypt(jwt)
 
   if (!(session instanceof Error)) {
-    if (typeof session.roles === 'string') userIsAdmin = session.roles.includes('ADMIN')
+    userIsAdmin = Array.isArray(session.roles) && session.roles.includes('ADMIN')
     isAuthenticated = session.userId !== undefined
     if (typeof session.username === 'string') userName = session.username
   }

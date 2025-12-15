@@ -33,8 +33,8 @@ export default async function middleware(req: NextRequest) {
   }
 
   // Parse the admin role
-  if (authSession && typeof authSession?.roles === 'string') {
-    userIsAdmin = authSession?.roles?.includes('ADMIN') ?? false
+  if (authSession && Array.isArray(authSession.roles)) {
+    userIsAdmin = authSession.roles.includes('ADMIN')
   }
 
   // Redirect to /login if the user is not authenticated

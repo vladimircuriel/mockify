@@ -155,6 +155,8 @@ public class UserController {
 
         User updated = UserMapper.INSTANCE.dtoToUser(request);
         updated.setId(id);
+        updated.setPassword(existing.getPassword());
+
 
         User saved = userService.saveUser(updated, request.getRoles());
 

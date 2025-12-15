@@ -3,7 +3,7 @@ import Method from '@lib/data/method.data'
 import type User from '@lib/entity/user.entity'
 const THIS_PATH = USERS_PATH
 
-const CURRENT_PATH = `${SERVER_PATH}/${THIS_PATH}/`
+const CURRENT_PATH = `${SERVER_PATH}/${THIS_PATH}`
 
 export const getUsers = async (token: string): Promise<[User[], Error | null]> => {
   try {

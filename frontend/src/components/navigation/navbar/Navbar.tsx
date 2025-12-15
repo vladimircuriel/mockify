@@ -5,8 +5,8 @@ import type { NavbarProps } from '@heroui/react'
 import { NavbarMenuToggle, Navbar as NextUINavbar, cn } from '@heroui/react'
 import React from 'react'
 
-import NavbarDesktop from './NavbarDesktop/NavbarDesktop'
-import NavbarMobile from './NavbarMobile/NavbarMobile'
+import NavbarDesktop from './navbarDesktop/NavbarDesktop'
+import NavbarMobile from './navbarMobile/NavbarMobile'
 
 interface CustomNavbarProps extends NavbarProps {
   admin?: boolean

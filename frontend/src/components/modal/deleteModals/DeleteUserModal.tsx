@@ -28,8 +28,10 @@ export default function DeleteUserModal({
   setSelectedUser,
 }: DeleteEndpointModalProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [{ errors }, action, pending] = useActionState(deleteUser, {
-    errors: {},
+  const [state, action, pending] = useActionState(deleteUser, {
+    errors: {
+      deleteUser: '',
+    },
   })
 
   const t = useTranslations('deleteUserModal')
@@ -69,7 +71,7 @@ export default function DeleteUserModal({
                 <Form
                   id="delete-user-form"
                   validationBehavior="native"
-                  validationErrors={errors}
+                  validationErrors={state?.errors}
                   action={action}
                 >
                   <input type="hidden" name="id" value={user.id} />

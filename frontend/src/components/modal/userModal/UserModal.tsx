@@ -36,7 +36,9 @@ export default function UserModal({
 
   const formAction = actionToPerform === 'create' ? createUser : updateUser
   const [{ errors }, action, pending] = useActionState(formAction, {
-    errors: {},
+    errors: {
+      user: '',
+    },
   })
 
   const t = useTranslations('userModal')
