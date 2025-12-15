@@ -103,11 +103,8 @@ public class EndpointController {
     public ResponseEntity<String> handleDynamicRequest(HttpServletRequest request)
             throws InterruptedException {
 
-        String path = request.getRequestURI().replace("/api/v1/endpoint", "");
+        String path = request.getRequestURI().replace("/api/v1/endpoint/", "");
         String method = request.getMethod();
-
-        log.info("PATH={}", path);
-        log.info("METHOD={}", method);
 
         Endpoint endpoint =
                 endpointService
@@ -268,13 +265,13 @@ public class EndpointController {
         Claims claims = requireValidClaims(token);
         User loggedUser = getLoggedUser(claims);
 
-        endpointService
+        Endpoint endpoint = endpointService
                 .getEndpointById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Endpoint not found"));
 
         Project project =
                 projectService
-                        .findByEndpointId(id)
+                        .findByEndpointId(endpoint.getProject().getId())
                         .orElseThrow(() -> new BadRequestException("Project not found"));
 
         if (!project.getOwner().getId().equals(loggedUser.getId())) {
