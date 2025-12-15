@@ -3,6 +3,7 @@ package com.o5d.mockify.service;
 
 import com.o5d.mockify.dto.response.AuthResponseDTO;
 import com.o5d.mockify.model.Endpoint;
+import com.o5d.mockify.model.Role;
 import com.o5d.mockify.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,7 +16,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,9 +49,15 @@ public class JWTService {
         }
 
         String userId = String.valueOf(user.get().getId());
+        Set<String> roles =
+                user.get()
+                    .getRoles()
+                    .stream()
+                    .map(r -> r.getName().name())
+                    .collect(Collectors.toSet());
 
         claims.put("username", userName);
-        claims.put("roles", user.get().getRoles().toString());
+        claims.put("roles", roles);
         claims.put("userId", userId);
 
         AuthResponseDTO authResponse = createToken(claims, userName, userId);
